@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Aplicación Cómic</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <div class="view active" id="authView">
+        <div class="auth-container">
+            <div class="forms-wrapper">
+                <div class="forms-container" id="formsContainer">
+                    
+                    <div class="form-section">
+                        <h1>LOGIN</h1>
+                        <p class="subtitle">Accede a tu cuenta</p>
+                        
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="loginEmail">📧 EMAIL</label>
+                                <input type="email" id="loginEmail" placeholder="tu@email.com" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="loginPassword">🔒 PASSWORD</label>
+                                <input type="password" id="loginPassword" placeholder="••••••••" required>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary">¡ENTRAR!</button>
+                        </form>
+
+                        <div class="divider">
+                            <span>¿Sin cuenta?</span>
+                        </div>
+
+                        <button class="btn-secondary" onclick="switchToRegister()">CREAR CUENTA</button>
+                    </div>
+
+                    
+                    <div class="form-section">
+                        <h1>SIGN UP</h1>
+                        <p class="subtitle">Únete ahora</p>
+                        
+                        <form id="registerForm">
+                            <div class="form-group">
+                                <label for="registerName">👤 NOMBRE</label>
+                                <input type="text" id="registerName" placeholder="Juan Pérez" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="registerEmail">📧 EMAIL</label>
+                                <input type="email" id="registerEmail" placeholder="tu@email.com" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="registerPassword">🔒 PASSWORD</label>
+                                <input type="password" id="registerPassword" placeholder="••••••••" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="registerConfirmPassword">🔐 CONFIRMAR</label>
+                                <input type="password" id="registerConfirmPassword" placeholder="••••••••" required>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary">¡REGISTRAR!</button>
+                        </form>
+
+                        <div class="divider">
+                            <span>¿Ya tienes cuenta?</span>
+                        </div>
+
+                        <button class="btn-secondary" onclick="switchToLogin()">INICIAR SESIÓN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="view" id="homeView">
+        <div class="container">
+            <div class="welcome">
+                <h1>¡BIENVENIDO!</h1>
+                <p style="font-weight: 900; font-size: 1.1rem;">TU PANEL PRINCIPAL</p>
+            </div>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3> DASHBOARD</h3>
+                    <p style="font-weight: 700;">Ver estadísticas</p>
+                </div>
+                
+                <div class="card">
+                    <h3> PERFIL</h3>
+                    <p style="font-weight: 700;">Editar información</p>
+                </div>
+                
+                <div class="card">
+                    <h3> CONFIG</h3>
+                    <p style="font-weight: 700;">Ajustar preferencias</p>
+                </div>
+                
+                <div class="card">
+                    <h3> MENSAJES</h3>
+                    <p style="font-weight: 700;">Ver notificaciones</p>
+                </div>
+            </div>
+            
+            <button class="logout-btn" onclick="logout()">¡SALIR!</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
