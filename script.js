@@ -33,3 +33,4 @@ document.addEventListener("DOMContentLoaded", () => {
         registerForm.reset();
     });
 });
+
