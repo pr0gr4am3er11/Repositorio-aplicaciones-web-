@@ -74,63 +74,15 @@ body::before {
     transform: rotate(-1deg);
 }
 
-
-
-
-.thought-bubble {
-    position: absolute;
-    top: -80px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    border: 4px solid #1a1a1a;
-    border-radius: 50%;
-    padding: 15px 25px;
-    font-family: 'Permanent Marker', cursive;
-    font-size: 18px;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
-    animation: float-bubble 3s infinite ease-in-out;
-}
-
-.thought-bubble::before,
-.thought-bubble::after {
-    content: "";
-    position: absolute;
-    background: white;
-    border: 4px solid #1a1a1a;
-    border-radius: 50%;
-}
-
-.thought-bubble::before {
-    width: 20px;
-    height: 20px;
-    bottom: -25px;
-    left: 30%;
-}
-
-.thought-bubble::after {
-    width: 12px;
-    height: 12px;
-    bottom: -40px;
-    left: 25%;
-}
-
-@keyframes float-bubble {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-10px); }
-}
-
 .forms-wrapper {
     overflow: hidden;
 }
-
 
 .forms-container {
     display: flex;
     width: 200%;
     transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
-
 
 .form-section {
     width: 50%;
@@ -154,6 +106,19 @@ h1 {
         -2px 2px 0 #000,
         2px 2px 0 #000;
     transform: skew(-5deg);
+}
+
+h2 {
+    font-family: 'Bangers', cursive;
+    font-size: 2rem;
+    color: #FF6B6B;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 
+        3px 3px 0 #000,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000;
 }
 
 .subtitle {
@@ -180,7 +145,9 @@ h1 {
     color: #1a1a1a;
 }
 
-.form-group input {
+.form-group input,
+.form-group textarea,
+.form-group select {
     width: 100%;
     padding: 0.85rem 1rem;
     border: 4px solid #1a1a1a;
@@ -194,7 +161,14 @@ h1 {
     transition: all 0.2s ease;
 }
 
-.form-group input:focus {
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
     outline: none;
     background: white;
     transform: translate(-3px, -3px);
@@ -203,14 +177,14 @@ h1 {
         inset 3px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
-.form-group input::placeholder {
+.form-group input::placeholder,
+.form-group textarea::placeholder {
     color: #999;
     font-weight: 400;
 }
 
 
-.btn-primary, .btn-secondary, .logout-btn {
-    width: 100%;
+.btn-primary, .btn-secondary, .logout-btn, .logout-btn-header, .btn-add-project, .btn-close {
     padding: 1rem;
     border: 5px solid #1a1a1a;
     font-size: 1.2rem;
@@ -227,6 +201,7 @@ h1 {
 .btn-primary {
     background: #FFE66D;
     color: #1a1a1a;
+    width: 100%;
 }
 
 .btn-primary:hover {
@@ -239,27 +214,10 @@ h1 {
     box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
-
-.btn-primary::after {
-    content: "★";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    font-size: 30px;
-    color: #FF6B6B;
-    pointer-events: none;
-    transition: transform 0.3s ease;
-}
-
-.btn-primary:active::after {
-    transform: translate(-50%, -50%) scale(2);
-    opacity: 0;
-}
-
 .btn-secondary {
     background: white;
     color: #1a1a1a;
+    width: 100%;
 }
 
 .btn-secondary:hover {
@@ -300,101 +258,421 @@ h1 {
 
 
 .container {
-    max-width: 900px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 1rem;
+    width: 100%;
 }
 
 .welcome {
     background: white;
-    padding: 2.5rem;
+    padding: 2rem;
     border: 6px solid #1a1a1a;
     margin-bottom: 2rem;
-    text-align: center;
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
     position: relative;
     transform: rotate(1deg);
 }
 
+.welcome-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
 .welcome h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-}
-
-
-.welcome::before {
-    content: "BOOM!";
-    position: absolute;
-    top: -40px;
-    right: -40px;
-    font-family: 'Bangers', cursive;
-    font-size: 40px;
-    color: #FF6B6B;
-    text-shadow: 
-        3px 3px 0 #000,
-        -1px -1px 0 #000,
-        1px -1px 0 #000,
-        -1px 1px 0 #000;
-    transform: rotate(15deg);
-}
-
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-}
-
-.card {
-    background: white;
-    border: 5px solid #1a1a1a;
-    padding: 2rem;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
-    position: relative;
-}
-
-.card::before {
-    content: "";
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    width: 15px;
-    height: 15px;
-    background: 
-        linear-gradient(135deg, transparent 50%, #1a1a1a 50%, #1a1a1a 60%, white 60%);
-}
-
-.card:nth-child(1) { transform: rotate(-2deg); }
-.card:nth-child(2) { transform: rotate(1deg); }
-.card:nth-child(3) { transform: rotate(-1deg); }
-.card:nth-child(4) { transform: rotate(2deg); }
-
-.card:hover {
-    transform: rotate(0deg) translate(-5px, -5px) scale(1.05);
-    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
-}
-
-.card h3 {
-    font-family: 'Bangers', cursive;
+    font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    font-size: 1.8rem;
-    color: #FF6B6B;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
 }
 
-.logout-btn {
+.logout-btn-header {
+    padding: 0.75rem 1.5rem;
     background: #FF6B6B;
     color: white;
-    max-width: 250px;
-    display: block;
-    margin: 0 auto;
+    font-size: 1rem;
 }
 
-.logout-btn:hover {
+.logout-btn-header:hover {
     background: #FF4757;
     transform: translate(-3px, -3px);
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
 }
 
+
+.actions-bar {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-add-project {
+    padding: 1rem 2rem;
+    background: #4ECDC4;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.btn-add-project:hover {
+    background: #3DBDB3;
+    transform: translate(-3px, -3px);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+.project-form-container {
+    margin-bottom: 2rem;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.project-form-card {
+    background: white;
+    border: 6px solid #1a1a1a;
+    padding: 2rem;
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.btn-close {
+    padding: 0.5rem 1rem;
+    background: #FF6B6B;
+    color: white;
+    font-size: 1rem;
+}
+
+.btn-close:hover {
+    background: #FF4757;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.form-actions button {
+    flex: 1;
+}
+
+
+.projects-container {
+    margin-top: 2rem;
+}
+
+.section-title {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+
+.project-card {
+    background: white;
+    border: 5px solid #1a1a1a;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.project-card:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
+}
+
+.project-card h3 {
+    font-family: 'Bangers', cursive;
+    font-size: 1.5rem;
+    color: #FF6B6B;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.project-card p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.project-status {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 3px solid #1a1a1a;
+    font-weight: 900;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.status-planning { background: #FFE66D; }
+.status-in-progress { background: #4ECDC4; }
+.status-completed { background: #90EE90; }
+.status-on-hold { background: #FFA07A; }
+
+.project-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.btn-edit, .btn-delete {
+    flex: 1;
+    padding: 0.75rem;
+    border: 4px solid #1a1a1a;
+    font-size: 0.9rem;
+    font-weight: 900;
+    cursor: pointer;
+    font-family: 'Bangers', cursive;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-edit {
+    background: #4ECDC4;
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #3DBDB3;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.btn-delete {
+    background: #FF6B6B;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #FF4757;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.loading-message, .empty-message, .error-message {
+    text-align: center;
+    padding: 3rem;
+    font-weight: 700;
+    font-size: 1.2rem;
+    background: white;
+    border: 5px solid #1a1a1a;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.error-message {
+    background: #FFE5E5;
+    color: #FF6B6B;
+}
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border: 6px solid #1a1a1a;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 1rem;
+}
+
+.modal-content p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.modal-actions button {
+    flex: 1;
+}
+
+
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .welcome-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+}
+
+
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+
+.notification {
+    background: white;
+    border: 5px solid #1a1a1a;
+    padding: 1.5rem;
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.notification.success {
+    border-color: #4ECDC4;
+}
+
+.notification.error {
+    border-color: #FF6B6B;
+}
+
+.notification.warning {
+    border-color: #FFE66D;
+}
+
+.notification.info {
+    border-color: #4ECDC4;
+}
+
+.notification-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-family: 'Bangers', cursive;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+    color: #1a1a1a;
+}
+
+.notification-message {
+    font-weight: 600;
+    color: #333;
+}
+
+.notification-close {
+    background: #FF6B6B;
+    color: white;
+    border: 3px solid #1a1a1a;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-weight: 900;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.notification-close:hover {
+    background: #FF4757;
+    transform: scale(1.1);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+.notification.closing {
+    animation: slideOut 0.3s ease-out forwards;
+}
+
+
+@media (max-width: 768px) {
+    .notification-container {
+        left: 10px;
+        right: 10px;
+        max-width: calc(100% - 20px);
+    }
+    
+    .notification {
+        padding: 1rem;
+    }
+    
+    .notification-icon {
+        font-size: 1.5rem;
+    }
+    
+    .notification-title {
+        font-size: 1rem;
+    }
+}

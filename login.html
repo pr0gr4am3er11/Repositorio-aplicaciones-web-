@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Aplicación Cómic</title>
+    <title>Backoffice - Gestión de Proyectos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -45,23 +45,28 @@
                         
                         <form id="registerForm">
                             <div class="form-group">
+                                <label for="registerItsonId">🆔 ITSON ID</label>
+                                <input type="text" id="registerItsonId" name="itsonId" placeholder="2136578" required>
+                            </div>
+                            
+                            <div class="form-group">
                                 <label for="registerName">👤 NOMBRE</label>
                                 <input type="text" id="registerName" placeholder="Juan Pérez" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="registerEmail">📧 EMAIL</label>
-                                <input type="email" id="registerEmail" placeholder="tu@email.com" required>
+                                <input type="email" id="registerEmail" placeholder="tu@gmail.com" required>
                             </div>
                             
                             <div class="form-group">
                                 <label for="registerPassword">🔒 PASSWORD</label>
-                                <input type="password" id="registerPassword" placeholder="••••••••" required>
+                                <input type="password" id="registerPassword" placeholder="••••••••" required minlength="6">
                             </div>
                             
                             <div class="form-group">
                                 <label for="registerConfirmPassword">🔐 CONFIRMAR</label>
-                                <input type="password" id="registerConfirmPassword" placeholder="••••••••" required>
+                                <input type="password" id="registerConfirmPassword" placeholder="••••••••" required minlength="6">
                             </div>
                             
                             <button type="submit" class="btn-primary">¡REGISTRAR!</button>
@@ -78,42 +83,90 @@
         </div>
     </div>
 
-    
+   
     <div class="view" id="homeView">
         <div class="container">
+            
             <div class="welcome">
-                <h1>¡BIENVENIDO!</h1>
-                <p style="font-weight: 900; font-size: 1.1rem;">TU PANEL PRINCIPAL</p>
-            </div>
-            
-            <div class="card-grid">
-                <div class="card">
-                    <h3> DASHBOARD</h3>
-                    <p style="font-weight: 700;">Ver estadísticas</p>
-                </div>
-                
-                <div class="card">
-                    <h3> PERFIL</h3>
-                    <p style="font-weight: 700;">Editar información</p>
-                </div>
-                
-                <div class="card">
-                    <h3> CONFIG</h3>
-                    <p style="font-weight: 700;">Ajustar preferencias</p>
-                </div>
-                
-                <div class="card">
-                    <h3> MENSAJES</h3>
-                    <p style="font-weight: 700;">Ver notificaciones</p>
+                <div class="welcome-content">
+                    <div>
+                        <h1>¡BIENVENIDO! <span id="userName"></span></h1>
+                        <p style="font-weight: 900; font-size: 1.1rem;">PANEL DE PROYECTOS</p>
+                    </div>
+                    <button class="logout-btn-header" onclick="logout()">🚪 SALIR</button>
                 </div>
             </div>
             
-            <button class="logout-btn" onclick="logout()">¡SALIR!</button>
+         
+            <div class="actions-bar">
+                <button class="btn-add-project" onclick="showAddProjectForm()">
+                    ➕ AGREGAR PROYECTO
+                </button>
+            </div>
+
+            
+            <div class="project-form-container" id="projectFormContainer" style="display: none;">
+                <div class="project-form-card">
+                    <div class="form-header">
+                        <h2 id="formTitle">NUEVO PROYECTO</h2>
+                        <button class="btn-close" onclick="hideProjectForm()">✖</button>
+                    </div>
+                    
+                    <form id="projectForm">
+                        <input type="hidden" id="projectId">
+                        
+                        <div class="form-group">
+                            <label for="projectName">📝 NOMBRE DEL PROYECTO</label>
+                            <input type="text" id="projectName" placeholder="Mi Proyecto Increíble" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectDescription">📄 DESCRIPCIÓN</label>
+                            <textarea id="projectDescription" placeholder="Describe tu proyecto..." rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectStatus">⚡ ESTADO</label>
+                            <select id="projectStatus" required>
+                                <option value="planning">Planificación</option>
+                                <option value="in-progress">En Progreso</option>
+                                <option value="completed">Completado</option>
+                                <option value="on-hold">En Pausa</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">💾 GUARDAR</button>
+                            <button type="button" class="btn-secondary" onclick="hideProjectForm()">CANCELAR</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            
+            <div class="projects-container">
+                <h2 class="section-title">📊 MIS PROYECTOS</h2>
+                <div class="projects-grid" id="projectsGrid">
+                   
+                    <div class="loading-message">Cargando proyectos...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar -->
+    <div class="modal" id="deleteModal" style="display: none;">
+        <div class="modal-content">
+            <h2>⚠️ CONFIRMAR ELIMINACIÓN</h2>
+            <p>¿Estás seguro de que deseas eliminar este proyecto?</p>
+            <p style="font-weight: 700; color: #FF6B6B;">Esta acción no se puede deshacer.</p>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="confirmDelete()">SÍ, ELIMINAR</button>
+                <button class="btn-secondary" onclick="closeDeleteModal()">CANCELAR</button>
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
-
