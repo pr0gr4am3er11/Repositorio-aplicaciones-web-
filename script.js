@@ -1,7 +1,6 @@
 
 const API_URL = 'https://portfolio-api-three-black.vercel.app/api/v1';
 
-
 let currentProjectId = null;
 let projects = [];
 
@@ -38,7 +37,6 @@ function showNotification(message, type = 'info', title = '') {
 
     container.appendChild(notification);
 
-   
     setTimeout(() => {
         if (notification.parentElement) {
             closeNotification(notification.querySelector('.notification-close'));
@@ -57,7 +55,6 @@ function closeNotification(button) {
         }
     }, 300);
 }
-
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -175,7 +172,6 @@ async function handleLogin(e) {
         console.log('Respuesta login:', data);
 
         if (response.ok && data.token) {
-           
             localStorage.setItem('authToken', data.token);
             if (data.user) {
                 localStorage.setItem('user', JSON.stringify(data.user));
@@ -183,10 +179,8 @@ async function handleLogin(e) {
 
             showNotification('Bienvenido de nuevo', 'success', '¡Login Exitoso!');
             
-            
             showHomeView();
             
-           
             setTimeout(() => {
                 loadProjects();
             }, 500);
@@ -210,7 +204,6 @@ async function verifyTokenAndLoadHome() {
 
     showHomeView();
     
-  
     setTimeout(() => {
         loadProjects();
     }, 300);
@@ -225,7 +218,6 @@ function confirmLogout() {
     localStorage.removeItem('user');
     projects = [];
     
-    // Cerrar modal si está abierto
     const modal = document.getElementById('logoutModal');
     if (modal) modal.style.display = 'none';
     
@@ -299,7 +291,7 @@ async function loadProjects() {
         const response = await fetch(`${API_URL}/projects`, {
             method: 'GET',
             headers: {
-                'auth-token': token  
+                'auth-token': token
             }
         });
 
@@ -309,8 +301,6 @@ async function loadProjects() {
             projectsGrid.innerHTML = `
                 <div class="error-message">
                     ⚠️ El endpoint de proyectos aún no está configurado.
-                    <br><br>
-                    <strong>Ruta esperada:</strong> ${API_URL}/projects
                 </div>
             `;
             return;
@@ -319,20 +309,12 @@ async function loadProjects() {
         if (response.status === 401) {
             projectsGrid.innerHTML = `
                 <div class="error-message">
-                    ⚠️ No se pudieron cargar los proyectos.
-                    <br><br>
-                    Token inválido o expirado.
-                    <br><br>
-                    <button class="btn-primary" onclick="confirmLogout()" style="max-width: 200px; margin: 0 auto; display: block;">
-                        🔑 INICIAR SESIÓN
-                    </button>
+                    ⚠️ No se pudieron cargar los proyectos. Token inválido o expirado.
                 </div>
             `;
-            showNotification('Tu sesión ha expirado', 'warning', 'Sesión Expirada');
             return;
         }
 
-        
         const data = await response.json();
         console.log('Datos de proyectos:', data);
 
@@ -380,7 +362,7 @@ function displayProjects() {
             ` : ''}
             ${project.repository ? `
                 <div style="margin: 0.5rem 0;">
-                    <strong>📦 Repositorio:</strong> <a href="${project.repository}" target="_blank" style="color: #4ECDC4;">Ver en GitHub</a>
+                    <strong>📦 Repositorio:</strong> <a href="${escapeHtml(project.repository)}" target="_blank" style="color: #4ECDC4; text-decoration: underline;">Ver en GitHub</a>
                 </div>
             ` : ''}
             <div class="project-actions">
@@ -438,19 +420,43 @@ async function handleProjectSubmit(e) {
     const projectId = form.querySelector('#projectId')?.value;
     
     
-    const projectData = {
-        title: form.querySelector('#projectName')?.value,  
-        description: form.querySelector('#projectDescription')?.value,
-        userId: user.id,  
-        technologies: [],  
-        repository: '',    
-        images: []         
-    };
+    const title = form.querySelector('#projectTitle')?.value.trim();
+    const description = form.querySelector('#projectDescription')?.value.trim();
+    const technologiesInput = form.querySelector('#projectTechnologies')?.value.trim();
+    const repositoryInput = form.querySelector('#projectRepository')?.value.trim();
 
-    if (!projectData.title || !projectData.description) {
-        showNotification('Por favor completa todos los campos', 'error');
+    
+    if (!title || !description) {
+        showNotification('Por favor completa título y descripción', 'error');
         return;
     }
+
+    if (title.length < 3) {
+        showNotification('El título debe tener al menos 3 caracteres', 'error');
+        return;
+    }
+
+    
+    const technologies = technologiesInput
+        .split(',')
+        .map(tech => tech.trim())
+        .filter(tech => tech.length > 0);
+
+    
+    const projectData = {
+        title: title,
+        description: description,
+        userId: user.id,
+        technologies: technologies,
+        images: []
+    };
+
+    
+    if (repositoryInput && repositoryInput.length > 0) {
+        projectData.repository = repositoryInput;
+    }
+
+    console.log('Enviando proyecto:', projectData);
 
     try {
         const url = projectId 
@@ -463,7 +469,7 @@ async function handleProjectSubmit(e) {
             method: method,
             headers: {
                 'Content-Type': 'application/json',
-                'auth-token': token  
+                'auth-token': token
             },
             body: JSON.stringify(projectData)
         });
@@ -497,14 +503,26 @@ function editProject(projectId) {
 
     const formTitle = document.getElementById("formTitle");
     const projectIdInput = document.getElementById("projectId");
-    const projectNameInput = document.getElementById("projectName");
+    const projectTitleInput = document.getElementById("projectTitle");
     const projectDescriptionInput = document.getElementById("projectDescription");
+    const projectTechnologiesInput = document.getElementById("projectTechnologies");
+    const projectRepositoryInput = document.getElementById("projectRepository");
     const formContainer = document.getElementById("projectFormContainer");
 
     if (formTitle) formTitle.textContent = "EDITAR PROYECTO";
     if (projectIdInput) projectIdInput.value = project._id;
-    if (projectNameInput) projectNameInput.value = project.title;
+    if (projectTitleInput) projectTitleInput.value = project.title;
     if (projectDescriptionInput) projectDescriptionInput.value = project.description;
+    
+    if (projectTechnologiesInput && project.technologies) {
+        projectTechnologiesInput.value = project.technologies.join(', ');
+    }
+    
+    
+    if (projectRepositoryInput) {
+        projectRepositoryInput.value = project.repository || '';
+    }
+    
     if (formContainer) {
         formContainer.style.display = "block";
         formContainer.scrollIntoView({ behavior: 'smooth' });
@@ -530,7 +548,7 @@ async function confirmDelete() {
         const response = await fetch(`${API_URL}/projects/${currentProjectId}`, {
             method: 'DELETE',
             headers: {
-                'auth-token': token  
+                'auth-token': token
             }
         });
 

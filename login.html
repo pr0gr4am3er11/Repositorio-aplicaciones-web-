@@ -46,12 +46,12 @@
                         <form id="registerForm">
                             <div class="form-group">
                                 <label for="registerItsonId">🆔 ITSON ID</label>
-                                <input type="text" id="registerItsonId" name="itsonId" placeholder="2136578" required>
+                                <input type="text" id="registerItsonId" name="itsonId" placeholder="216578" required maxlength="6" pattern="[0-9]{6}">
                             </div>
                             
                             <div class="form-group">
                                 <label for="registerName">👤 NOMBRE</label>
-                                <input type="text" id="registerName" placeholder="Juan Pérez" required>
+                                <input type="text" id="registerName" placeholder="Juan Pérez" required minlength="6">
                             </div>
                             
                             <div class="form-group">
@@ -83,21 +83,19 @@
         </div>
     </div>
 
-   
     <div class="view" id="homeView">
         <div class="container">
-            
+           
             <div class="welcome">
                 <div class="welcome-content">
                     <div>
                         <h1>¡BIENVENIDO! <span id="userName"></span></h1>
                         <p style="font-weight: 900; font-size: 1.1rem;">PANEL DE PROYECTOS</p>
                     </div>
-                    <button class="logout-btn-header" onclick="logout()">🚪 SALIR</button>
+                    <button class="logout-btn-header" onclick="openLogoutModal()">🚪 SALIR</button>
                 </div>
             </div>
             
-         
             <div class="actions-bar">
                 <button class="btn-add-project" onclick="showAddProjectForm()">
                     ➕ AGREGAR PROYECTO
@@ -116,8 +114,9 @@
                         <input type="hidden" id="projectId">
                         
                         <div class="form-group">
-                            <label for="projectName">📝 NOMBRE DEL PROYECTO</label>
-                            <input type="text" id="projectName" placeholder="Mi Proyecto Increíble" required>
+                            <label for="projectTitle">📝 TÍTULO DEL PROYECTO</label>
+                            <input type="text" id="projectTitle" placeholder="Mi Proyecto Increíble" required minlength="3">
+                            <small style="display: block; margin-top: 0.5rem; color: #666; font-weight: 400;">Mínimo 3 caracteres</small>
                         </div>
                         
                         <div class="form-group">
@@ -126,13 +125,15 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="projectStatus">⚡ ESTADO</label>
-                            <select id="projectStatus" required>
-                                <option value="planning">Planificación</option>
-                                <option value="in-progress">En Progreso</option>
-                                <option value="completed">Completado</option>
-                                <option value="on-hold">En Pausa</option>
-                            </select>
+                            <label for="projectTechnologies">🛠️ TECNOLOGÍAS</label>
+                            <input type="text" id="projectTechnologies" placeholder="React, Node.js, MongoDB">
+                            <small style="display: block; margin-top: 0.5rem; color: #666; font-weight: 400;">Separa con comas. Ejemplo: JavaScript, React, MongoDB</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectRepository">📦 REPOSITORIO (OPCIONAL)</label>
+                            <input type="url" id="projectRepository" placeholder="https://github.com/usuario/proyecto">
+                            <small style="display: block; margin-top: 0.5rem; color: #666; font-weight: 400;">Deja vacío si no tienes repositorio</small>
                         </div>
                         
                         <div class="form-actions">
@@ -147,14 +148,13 @@
             <div class="projects-container">
                 <h2 class="section-title">📊 MIS PROYECTOS</h2>
                 <div class="projects-grid" id="projectsGrid">
-                   
                     <div class="loading-message">Cargando proyectos...</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal de confirmación para eliminar -->
+    
     <div class="modal" id="deleteModal" style="display: none;">
         <div class="modal-content">
             <h2>⚠️ CONFIRMAR ELIMINACIÓN</h2>
@@ -166,6 +166,21 @@
             </div>
         </div>
     </div>
+
+   
+    <div class="modal" id="logoutModal" style="display: none;">
+        <div class="modal-content">
+            <h2>🚪 CERRAR SESIÓN</h2>
+            <p style="font-size: 1.2rem; font-weight: 700;">¿Seguro que deseas cerrar sesión?</p>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="confirmLogout()">SÍ, SALIR</button>
+                <button class="btn-secondary" onclick="closeLogoutModal()">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="notification-container" id="notificationContainer"></div>
 
     <script src="script.js"></script>
 </body>
